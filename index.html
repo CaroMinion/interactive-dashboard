@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Happiness Dashboard</title>
+    </head>
+    <body>
+        <script src="https://d3js.org/d3.v6.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="./lineChart.js"></script>
+        <script src="./getDataLineChart.js"></script>
+        <script src="./barChart.js"></script>
+        <script src="./getDataBarChart.js"></script>
+        <!-- <h1>Happiness Score 2015 - 2020</h1> -->
+
+        <div style="width: 800px; height: 400px">
+            <canvas id="myLineChart"></canvas>
+        </div>
+        <div style="width: 800px; height: 400px">
+            <canvas id="myBarChart"></canvas>
+        </div>
+
+        <script>
+            d3.csv("world_happiness_report.csv").then((data) => {
+                const canvasLineChart = document
+                    .getElementById("myLineChart")
+                    .getContext("2d");
+                const lineChart = createNewLineChart(canvasLineChart, data);
+
+                const canvasBarChart = document
+                    .getElementById("myBarChart")
+                    .getContext("2d");
+                const barChart = createNewBarChart(canvasBarChart, data);
+            });
+        </script>
+    </body>
+</html>
