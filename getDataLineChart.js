@@ -1,18 +1,24 @@
 function getDataLineChart(data) {
     const datasetsEurope = [];
     const countries = [
+        "China",
+        "United States",
+        "Japan",
         "Germany",
-        "Austria",
-        "Switzerland",
-        "Netherlands",
-        "France",
         "United Kingdom",
-        "Spain",
+        "India",
     ];
     const countriesObj = [];
 
     for (i = 0; i < data.length; i++) {
-        if (data[i].continent == "Europe") {
+        if (
+            data[i].Country == "China" ||
+            data[i].Country == "United States" ||
+            data[i].Country == "Japan" ||
+            data[i].Country == "Germany" ||
+            data[i].Country == "United Kingdom" ||
+            data[i].Country == "India"
+        ) {
             datasetsEurope.push(data[i]);
         }
     }

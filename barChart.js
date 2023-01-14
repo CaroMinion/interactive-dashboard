@@ -16,13 +16,10 @@ function createNewBarChart(canvas, data) {
         type: "bar",
         data: {
             labels: [
-                // "happiness score",
-                "gdp per capita",
-                "health",
-                "freedom",
-                "generosity",
-                "government_trust",
-                "social support",
+                "Happiness Score",
+                "GDP",
+                "Government Trust",
+                "CPI Score Scaled*",
             ],
             datasets: datasets,
         },
@@ -39,7 +36,8 @@ function createNewBarChart(canvas, data) {
                     position: "top",
                     align: "center",
                     color: "rgb(0, 0, 0)",
-                    text: "Relevance of Factors Contributing to the Happiness Score in 2020",
+                    text: "Comparision of Happiness Score, GDP, Government Trust and CPI Score in 2020 ",
+                    font: {size: 16},
                 },
             },
             drawActiveElementsOnTop: true,
@@ -49,7 +47,7 @@ function createNewBarChart(canvas, data) {
                 id: "myEventCatcher",
                 beforeEvent(chart, args, pluginOptions) {
                     const event = args.event;
-                    //console.log(event.type);
+                    // console.log(event.type);
                 },
             },
         ],

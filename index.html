@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
     <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            /* "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif" */
+        }
         .bubbles {
             stroke-width: 1px;
             stroke: black;
@@ -37,16 +42,20 @@
         <script src="./getDataBubbleChart.js"></script>
         <script src="./bubbleChartD3.js"></script>
         <!-- <h1>Happiness Score 2015 - 2020</h1> -->
-
-        <div style="width: 800px; height: 400px">
-            <canvas id="myLineChart"></canvas>
-        </div>
-
-        <div style="width: 800px; height: 400px">
-            <canvas id="myBarChart"></canvas>
-        </div>
-
         <div id="myBubbleChartD3"></div>
+
+        <span style="display: flex">
+            <div style="width: 900px; height: 400px">
+                <canvas id="myLineChart"></canvas>
+            </div>
+
+            <div style="width: 900px; height: 400px">
+                <canvas id="myBarChart"></canvas></div
+        ></span>
+        <p style="float: right; margin-right: 50px">
+            * CPI Score = CPI Score Scaled * 10
+        </p>
+
         <!-- 
         <div style="width: 800px; height: 400px">
             <canvas id="myBubbleChart"></canvas>
@@ -74,9 +83,9 @@
             });
 
             // set the dimensions and margins of the graph
-            const margin = {top: 60, right: 150, bottom: 60, left: 30},
-                width = 1500 - margin.left - margin.right,
-                height = 600 - margin.top - margin.bottom;
+            const margin = {top: 0, right: 150, bottom: 60, left: 50},
+                width = window.innerWidth - margin.left - margin.right - 100,
+                height = 450 - margin.top - margin.bottom;
 
             // append the svg object to the body of the page
             const svg = d3
@@ -124,7 +133,7 @@
                     .attr("text-anchor", "end")
                     .attr("x", 0)
                     .attr("y", -20)
-                    .text("cpi score")
+                    .text("CPI Score")
                     .attr("text-anchor", "start");
 
                 // Add a scale for bubble size
@@ -180,7 +189,7 @@
                     tooltip
 
                         .style("left", event.clientX + "px")
-                        .style("top", event.clientY - 200 + "px");
+                        .style("top", event.clientY + "px");
                 };
                 const hideTooltip = function (event, d) {
                     tooltip.transition().duration(200).style("opacity", 0);
@@ -282,8 +291,8 @@
                 svg.selectAll("myrect")
                     .data(allgroups)
                     .join("circle")
-                    .attr("cx", 0.8 * width)
-                    .attr("cy", (d, i) => 0.7 * height + i * (size + 5))
+                    .attr("cx", 0.9 * width)
+                    .attr("cy", (d, i) => 0.6 * height + i * (size + 5))
                     // .attr("cy", (d, i) => 10 + i * (size + 5)) // 100 is where the first dot appears. 25 is the distance between dots
                     .attr("r", 7)
                     .style("fill", (d) => myColor(d))
@@ -295,10 +304,10 @@
                     .data(allgroups)
                     .enter()
                     .append("text")
-                    .attr("x", 0.8 * width + size * 0.8 + 5)
+                    .attr("x", 0.9 * width + size * 0.8 + 5)
                     .attr(
                         "y",
-                        (d, i) => i * (size + 5) + size / 2 + 0.7 * height - 5
+                        (d, i) => i * (size + 5) + size / 2 + 0.6 * height - 5
                     )
                     // .attr("y", (d, i) => i * (size + 5) + size / 2 + 5) // 100 is where the first dot appears. 25 is the distance between dots
                     .style("fill", (d) => myColor(d))
@@ -312,10 +321,11 @@
 
                 const chartTitel = d3
                     .select("#myBubbleChartD3")
-                    .insert("h3", "svg")
+                    .insert("p", "svg")
                     .text(
-                        "Impact of Corruption Perceptions Index Score and Government Trust on Happiness Score in 2020"
+                        "Impact of Corruption Perceptions Index (CPI) Score and Government Trust on Happiness Score in 2020"
                     )
+                    .style("font-weight", "bold")
                     .style("text-align", "center");
             });
         </script>

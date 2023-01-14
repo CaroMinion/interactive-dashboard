@@ -23,6 +23,13 @@ function createNewLineChart(canvas, data) {
             scales: {
                 y: {
                     beginAtZero: false,
+                    title: {
+                        display: true,
+                        position: "top",
+                        align: "center",
+                        color: "rgb(0, 0, 0)",
+                        text: "Happiness Score",
+                    },
                 },
             },
             plugins: {
@@ -32,6 +39,7 @@ function createNewLineChart(canvas, data) {
                     align: "center",
                     color: "rgb(0, 0, 0)",
                     text: "Happiness Score Development 2015 - 2020",
+                    font: {size: 16},
                 },
             },
             drawActiveElementsOnTop: true,
