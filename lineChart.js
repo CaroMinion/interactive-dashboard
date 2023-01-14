@@ -9,6 +9,8 @@ function createNewLineChart(canvas, data) {
         datasets.push({
             label: d.country,
             data: d.happiness,
+            backgroundColor: d.color,
+            borderColor: d.color,
         });
     });
 

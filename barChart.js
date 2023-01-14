@@ -9,6 +9,7 @@ function createNewBarChart(canvas, data) {
         datasets.push({
             label: d.country,
             data: d.info,
+            backgroundColor: d.color,
         });
     });
 

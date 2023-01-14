@@ -8,6 +8,15 @@ function getDataLineChart(data) {
         "United Kingdom",
         "India",
     ];
+
+    const colors = [
+        "rgba(31, 119, 180,1)",
+        "rgba(255, 127, 14, 1)",
+        "rgba(44, 160, 44, 1)",
+        "rgba(214, 39, 40, 1)",
+        "rgba(148, 103, 189, 1)",
+        "rgba(140, 86, 75, 1)",
+    ];
     const countriesObj = [];
 
     for (i = 0; i < data.length; i++) {
@@ -30,10 +39,12 @@ function getDataLineChart(data) {
     // }
     // countries.splice(countries.indexOf("Bosnia and Herzegovina"), 1);
 
-    console.log(countries);
-
     for (i = 0; i < countries.length; i++) {
-        countriesObj.push({country: countries[i], happiness: []});
+        countriesObj.push({
+            country: countries[i],
+            happiness: [],
+            color: [],
+        });
     }
 
     for (i = 0; i < datasetsEurope.length; i++) {
@@ -44,6 +55,10 @@ function getDataLineChart(data) {
                 );
             }
         }
+    }
+
+    for (i = 0; i < countriesObj.length; i++) {
+        countriesObj[i].color.push(colors[i]);
     }
 
     return countriesObj;
