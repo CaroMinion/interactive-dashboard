@@ -1,340 +1,347 @@
 <!DOCTYPE html>
 <html lang="en">
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 16px;
-        }
-        .bubbles {
-            stroke-width: 1px;
-            stroke: black;
-            opacity: 0.8;
-        }
-        .bubbles:hover {
-            stroke: black;
-            opacity: 1;
-        }
-        .tooltip {
-            /* text-decoration: none; */
-            position: relative;
-            width: 240px;
-        }
-        .tooltip div {
-        }
-        .tooltip:hover div {
-        }
-        #myBubbleChartD3 {
-        }
-    </style>
-    <head>
-        <meta charset="UTF-8" />
-        <title>Happiness Dashboard</title>
-    </head>
-    <body>
-        <script src="https://d3js.org/d3.v6.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="./lineChart.js"></script>
-        <script src="./getDataLineChart.js"></script>
-        <script src="./barChart.js"></script>
-        <script src="./getDataBarChart.js"></script>
-        <script src="./bubbleChart.js"></script>
-        <script src="./getDataBubbleChart.js"></script>
-        <script src="./bubbleChartD3.js"></script>
-        <!-- <h1>Happiness Score 2015 - 2020</h1> -->
-        <div id="myBubbleChartD3"></div>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+    }
+    .bubbles {
+      stroke-width: 1px;
+      stroke: black;
+      opacity: 0.8;
+    }
+    .bubbles:hover {
+      stroke: black;
+      opacity: 1;
+    }
+    .tooltip {
+      /* text-decoration: none; */
+      position: relative;
+      width: 240px;
+    }
+    .tooltip div {
+    }
+    .tooltip:hover div {
+    }
+    #myBubbleChartD3 {
+    }
+  </style>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Happiness Dashboard</title>
+  </head>
+  <body>
+    <script src="https://d3js.org/d3.v6.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./lineChart.js"></script>
+    <script src="./getDataLineChart.js"></script>
+    <script src="./barChart.js"></script>
+    <script src="./getDataBarChart.js"></script>
+    <script src="./bubbleChart.js"></script>
+    <script src="./getDataBubbleChart.js"></script>
+    <script src="./bubbleChartD3.js"></script>
+    <!-- <h1>Happiness Score 2015 - 2020</h1> -->
+    <div id="myBubbleChartD3"></div>
 
-        <span style="display: flex">
-            <div style="width: 900px; height: 400px">
-                <canvas id="myLineChart"></canvas>
-            </div>
+    <span style="display: flex">
+      <div style="width: 900px; height: 400px">
+        <canvas id="myLineChart"></canvas>
+      </div>
 
-            <div style="width: 900px; height: 400px">
-                <canvas id="myBarChart"></canvas></div
-        ></span>
-        <p style="float: right; margin-right: 50px">
-            * CPI Score = CPI Score Scaled * 10
-        </p>
+      <div style="width: 900px; height: 400px">
+        <canvas id="myBarChart"></canvas></div
+    ></span>
+    <p style="float: right; margin-right: 50px">
+      * CPI Score = CPI Score Scaled * 10
+    </p>
 
-        <!-- 
+    <!-- 
         <div style="width: 800px; height: 400px">
             <canvas id="myBubbleChart"></canvas>
         </div> -->
 
-        <script>
-            d3.csv("world_happiness_report.csv").then((data) => {
-                const canvasLineChart = document
-                    .getElementById("myLineChart")
-                    .getContext("2d");
-                const lineChart = createNewLineChart(canvasLineChart, data);
+    <script>
+      d3.csv("world_happiness_report.csv").then((data) => {
+        const canvasLineChart = document
+          .getElementById("myLineChart")
+          .getContext("2d");
+        const lineChart = createNewLineChart(canvasLineChart, data);
 
-                const canvasBarChart = document
-                    .getElementById("myBarChart")
-                    .getContext("2d");
-                const barChart = createNewBarChart(canvasBarChart, data);
+        const canvasBarChart = document
+          .getElementById("myBarChart")
+          .getContext("2d");
+        const barChart = createNewBarChart(canvasBarChart, data);
 
-                // const canvasBubbleChart = document
-                //     .getElementById("myBubbleChart")
-                //     .getContext("2d");
-                // const bubbleChart = createNewBubbleChart(
-                //     canvasBubbleChart,
-                //     data
-                // );
-            });
+        // const canvasBubbleChart = document
+        //     .getElementById("myBubbleChart")
+        //     .getContext("2d");
+        // const bubbleChart = createNewBubbleChart(
+        //     canvasBubbleChart,
+        //     data
+        // );
+      });
 
-            // set the dimensions and margins of the graph
-            const margin = {top: 0, right: 150, bottom: 60, left: 50},
-                width = window.innerWidth - margin.left - margin.right - 100,
-                height = 450 - margin.top - margin.bottom;
+      // set the dimensions and margins of the graph
+      const margin = { top: 15, right: 150, bottom: 40, left: 50 },
+        width = window.innerWidth - margin.left - margin.right - 100,
+        height = 450 - margin.top - margin.bottom;
 
-            // append the svg object to the body of the page
-            const svg = d3
-                .select("#myBubbleChartD3")
-                .append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-                .append("g")
-                .attr("transform", `translate(${margin.left},${margin.top})`);
+      // append the svg object to the body of the page
+      const svg = d3
+        .select("#myBubbleChartD3")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
 
-            //Read the data
-            d3.csv("world_happiness_report.csv").then(function (data) {
-                data_filtered = [];
+      //Read the data
+      d3.csv("world_happiness_report.csv").then(function (data) {
+        data_filtered = [];
 
-                for (i = 0; i < data.length; i++) {
-                    if (data[i].Year == 2020) {
-                        data_filtered.push(data[i]);
-                    }
-                }
-                data = data_filtered;
+        for (i = 0; i < data.length; i++) {
+          if (data[i].Year == 2020) {
+            data_filtered.push(data[i]);
+          }
+        }
+        data = data_filtered;
 
-                // ---------------------------//
-                //       AXIS  AND SCALE      //
-                // ---------------------------//
+        // ---------------------------//
+        //       AXIS  AND SCALE      //
+        // ---------------------------//
 
-                // Add X axis
-                const x = d3.scaleLinear().domain([0, 0.55]).range([0, width]);
-                svg.append("g")
-                    .attr("transform", `translate(0, ${height})`)
-                    .call(d3.axisBottom(x).ticks(3));
+        // Add X axis
+        const x = d3.scaleLinear().domain([0, 0.55]).range([0, width]);
+        svg
+          .append("g")
+          .attr("transform", `translate(0, ${height})`)
+          .call(d3.axisBottom(x).ticks(3));
 
-                // Add X axis label:
-                svg.append("text")
-                    .attr("text-anchor", "end")
-                    .attr("x", width)
-                    .attr("y", height + 50)
-                    .text("Government Trust");
+        // Add X axis label:
+        svg
+          .append("text")
+          .attr("text-anchor", "end")
+          .attr("x", width)
+          .attr("y", height + 25)
+          .text("Government Trust");
 
-                // Add Y axis
-                const y = d3.scaleLinear().domain([0, 100]).range([height, 0]);
-                svg.append("g").call(d3.axisLeft(y));
+        // Add Y axis
+        const y = d3.scaleLinear().domain([0, 100]).range([height, 0]);
+        svg.append("g").call(d3.axisLeft(y));
 
-                // Add Y axis label:
-                svg.append("text")
-                    .attr("text-anchor", "end")
-                    .attr("x", 0)
-                    .attr("y", -20)
-                    .text("CPI Score")
-                    .attr("text-anchor", "start");
+        // Add Y axis label:
+        svg
+          .append("text")
+          .attr("text-anchor", "end")
+          .attr("x", 0)
+          .attr("y", -3)
+          .text("CPI Score")
+          .attr("text-anchor", "start");
 
-                // Add a scale for bubble size
-                const z = d3.scaleSqrt().domain([2.5, 8]).range([2, 30]);
+        // Add a scale for bubble size
+        const z = d3.scaleSqrt().domain([2.5, 8]).range([2, 30]);
 
-                // Add a scale for bubble color
-                const myColor = d3
-                    .scaleOrdinal()
-                    .domain([
-                        "Asia",
-                        "Europe",
-                        "North America",
-                        "South America",
-                        "Africa",
-                        "Australia",
-                    ])
-                    .range([
-                        "rgb(31, 119, 180)",
-                        "rgb(255, 127, 14)",
-                        "rgb(44, 160, 44)",
-                        "rgb(214, 39, 40)",
-                        "rgb(148, 103, 189)",
-                        "rgb(140, 86, 75)",
-                    ]);
+        // Add a scale for bubble color
+        const myColor = d3
+          .scaleOrdinal()
+          .domain([
+            "Asia",
+            "Europe",
+            "North America",
+            "South America",
+            "Africa",
+            "Australia",
+          ])
+          .range([
+            "rgb(31, 119, 180)",
+            "rgb(255, 127, 14)",
+            "rgb(44, 160, 44)",
+            "rgb(214, 39, 40)",
+            "rgb(148, 103, 189)",
+            "rgb(140, 86, 75)",
+          ]);
 
-                // ---------------------------//
-                //      TOOLTIP               //
-                // ---------------------------//
+        // ---------------------------//
+        //      TOOLTIP               //
+        // ---------------------------//
 
-                // -1- Create a tooltip div that is hidden by default:
-                const tooltip = d3
-                    .select("#myBubbleChartD3")
-                    .insert("div", "svg")
-                    .style("opacity", 0)
-                    .attr("class", "tooltip")
-                    .style("background-color", "black")
-                    .style("border-radius", "5px")
-                    .style("padding", "10px")
-                    .style("color", "white");
+        // -1- Create a tooltip div that is hidden by default:
+        const tooltip = d3
+          .select("#myBubbleChartD3")
+          .insert("div", "svg")
+          .style("opacity", 0)
+          .attr("class", "tooltip")
+          .style("background-color", "black")
+          .style("border-radius", "5px")
+          .style("padding", "10px")
+          .style("color", "white");
 
-                // -2- Create 3 functions to show / update (when mouse move but stay on same circle) / hide the tooltip
-                const showTooltip = function (event, d) {
-                    tooltip.transition().duration(200);
-                    tooltip
-                        .style("opacity", 0.8)
-                        .html(
-                            "<b>Country: " +
-                                d.Country +
-                                "</b><br><br> Happiness Score: " +
-                                Math.round(d.happiness_score * 100) / 100 +
-                                "<br> Government Trust: " +
-                                Math.round(d.government_trust * 100) / 100 +
-                                "<br> Corruption Perceptions Index: " +
-                                d.cpi_score
-                        )
-                        .style("left", event.clientX + "px")
-                        .style("top", event.clientY + "px");
-                };
-                const moveTooltip = function (event, d) {
-                    tooltip
+        // -2- Create 3 functions to show / update (when mouse move but stay on same circle) / hide the tooltip
+        const showTooltip = function (event, d) {
+          tooltip.transition().duration(200);
+          tooltip
+            .style("opacity", 0.8)
+            .html(
+              "<b>Country: " +
+                d.Country +
+                "</b><br><br> Happiness Score: " +
+                Math.round(d.happiness_score * 100) / 100 +
+                "<br> Government Trust: " +
+                Math.round(d.government_trust * 100) / 100 +
+                "<br> Corruption Perceptions Index: " +
+                d.cpi_score
+            )
+            .style("left", event.clientX + "px")
+            .style("top", event.clientY + "px");
+        };
+        const moveTooltip = function (event, d) {
+          tooltip
 
-                        .style("left", event.clientX + "px")
-                        .style("top", event.clientY + "px");
-                };
-                const hideTooltip = function (event, d) {
-                    tooltip.transition().duration(200).style("opacity", 0);
-                };
+            .style("left", event.clientX + "px")
+            .style("top", event.clientY + "px");
+        };
+        const hideTooltip = function (event, d) {
+          tooltip.transition().duration(200).style("opacity", 0);
+        };
 
-                // ---------------------------//
-                //       HIGHLIGHT GROUP      //
-                // ---------------------------//
+        // ---------------------------//
+        //       HIGHLIGHT GROUP      //
+        // ---------------------------//
 
-                // What to do when one group is hovered
-                const highlight = function (event, d) {
-                    // reduce opacity of all groups
-                    d3.selectAll(".bubbles").style("opacity", 0.5);
-                    // expect the one that is hovered
-                    d3.selectAll("." + d).style("opacity", 1);
-                };
+        // What to do when one group is hovered
+        const highlight = function (event, d) {
+          // reduce opacity of all groups
+          d3.selectAll(".bubbles").style("opacity", 0.5);
+          // expect the one that is hovered
+          d3.selectAll("." + d).style("opacity", 1);
+        };
 
-                // And when it is not hovered anymore
-                const noHighlight = function (event, d) {
-                    d3.selectAll(".bubbles").style("opacity", 0.8);
-                };
+        // And when it is not hovered anymore
+        const noHighlight = function (event, d) {
+          d3.selectAll(".bubbles").style("opacity", 0.8);
+        };
 
-                // ---------------------------//
-                //       CIRCLES              //
-                // ---------------------------//
+        // ---------------------------//
+        //       CIRCLES              //
+        // ---------------------------//
 
-                // Add dots
-                svg.append("g")
-                    .selectAll("dot")
-                    .data(data)
-                    .join("circle")
-                    .attr("class", function (d) {
-                        return "bubbles " + d.continent;
-                    })
-                    .attr("cx", (d) => x(d.government_trust))
-                    .attr("cy", (d) => y(d.cpi_score))
-                    .attr("r", (d) => z(d.happiness_score))
-                    .style("fill", (d) => myColor(d.continent))
-                    // -3- Trigger the functions for hover
-                    .on("mouseover", showTooltip)
-                    .on("mousemove", moveTooltip)
-                    .on("mouseleave", hideTooltip);
+        // Add dots
+        svg
+          .append("g")
+          .selectAll("dot")
+          .data(data)
+          .join("circle")
+          .attr("class", function (d) {
+            return "bubbles " + d.continent;
+          })
+          .attr("cx", (d) => x(d.government_trust))
+          .attr("cy", (d) => y(d.cpi_score))
+          .attr("r", (d) => z(d.happiness_score))
+          .style("fill", (d) => myColor(d.continent))
+          // -3- Trigger the functions for hover
+          .on("mouseover", showTooltip)
+          .on("mousemove", moveTooltip)
+          .on("mouseleave", hideTooltip);
 
-                // ---------------------------//
-                //       LEGEND              //
-                // ---------------------------//
+        // ---------------------------//
+        //       LEGEND              //
+        // ---------------------------//
 
-                // Add legend: circles
-                const valuesToShow = [10000000, 100000000, 1000000000];
-                const xCircle = 390;
-                const xLabel = 440;
-                svg.selectAll("legend")
-                    .data(valuesToShow)
-                    .join("circle")
-                    .attr("cx", xCircle)
-                    .attr("cy", (d) => height - 100 - z(d))
-                    .attr("r", (d) => z(d))
-                    .style("fill", "none")
-                    .attr("stroke", "none");
+        // Add legend: circles
+        const valuesToShow = [10000000, 100000000, 1000000000];
+        const xCircle = 390;
+        const xLabel = 440;
+        svg
+          .selectAll("legend")
+          .data(valuesToShow)
+          .join("circle")
+          .attr("cx", xCircle)
+          .attr("cy", (d) => height - 100 - z(d))
+          .attr("r", (d) => z(d))
+          .style("fill", "none")
+          .attr("stroke", "none");
 
-                // Add legend: segments
-                svg.selectAll("legend")
-                    .data(valuesToShow)
-                    .join("line")
-                    .attr("x1", (d) => xCircle + z(d))
-                    .attr("x2", xLabel)
-                    .attr("y1", (d) => height - 100 - z(d))
-                    .attr("y2", (d) => height - 100 - z(d))
-                    .attr("stroke", "black")
-                    .style("stroke-dasharray", "2,2");
+        // Add legend: segments
+        svg
+          .selectAll("legend")
+          .data(valuesToShow)
+          .join("line")
+          .attr("x1", (d) => xCircle + z(d))
+          .attr("x2", xLabel)
+          .attr("y1", (d) => height - 100 - z(d))
+          .attr("y2", (d) => height - 100 - z(d))
+          .attr("stroke", "black")
+          .style("stroke-dasharray", "2,2");
 
-                // Add legend: labels
-                svg.selectAll("legend")
-                    .data(valuesToShow)
-                    .join("text")
-                    .attr("x", xLabel)
-                    .attr("y", (d) => height - 100 - z(d))
-                    .text((d) => d / 1000000)
-                    .style("font-size", 10)
-                    .attr("alignment-baseline", "middle");
+        // Add legend: labels
+        svg
+          .selectAll("legend")
+          .data(valuesToShow)
+          .join("text")
+          .attr("x", xLabel)
+          .attr("y", (d) => height - 100 - z(d))
+          .text((d) => d / 1000000)
+          .style("font-size", 10)
+          .attr("alignment-baseline", "middle");
 
-                // Legend title
-                svg.append("text")
-                    .attr("x", xCircle)
-                    .attr("y", height - 100 + 30)
-                    //.text("Population (M)")
-                    .attr("text-anchor", "middle");
+        // Legend title
+        svg
+          .append("text")
+          .attr("x", xCircle)
+          .attr("y", height - 100 + 30)
+          //.text("Population (M)")
+          .attr("text-anchor", "middle");
 
-                // Add one dot in the legend for each name.
-                const size = 20;
-                const allgroups = [
-                    "Asia",
-                    "Europe",
-                    "North America",
-                    "South America",
-                    "Africa",
-                    "Australia",
-                ];
+        // Add one dot in the legend for each name.
+        const size = 20;
+        const allgroups = [
+          "Asia",
+          "Europe",
+          "North America",
+          "South America",
+          "Africa",
+          "Australia",
+        ];
 
-                svg.selectAll("myrect")
-                    .data(allgroups)
-                    .join("circle")
-                    .attr("cx", 0.9 * width)
-                    .attr("cy", (d, i) => 0.6 * height + i * (size + 5))
-                    // .attr("cy", (d, i) => 10 + i * (size + 5)) // 100 is where the first dot appears. 25 is the distance between dots
-                    .attr("r", 7)
-                    .style("fill", (d) => myColor(d))
-                    .on("mouseover", highlight)
-                    .on("mouseleave", noHighlight);
+        svg
+          .selectAll("myrect")
+          .data(allgroups)
+          .join("circle")
+          .attr("cx", 0.9 * width)
+          .attr("cy", (d, i) => 0.6 * height + i * (size + 5))
+          // .attr("cy", (d, i) => 10 + i * (size + 5)) // 100 is where the first dot appears. 25 is the distance between dots
+          .attr("r", 7)
+          .style("fill", (d) => myColor(d))
+          .on("mouseover", highlight)
+          .on("mouseleave", noHighlight);
 
-                // Add labels beside legend dots
-                svg.selectAll("mylabels")
-                    .data(allgroups)
-                    .enter()
-                    .append("text")
-                    .attr("x", 0.9 * width + size * 0.8 + 5)
-                    .attr(
-                        "y",
-                        (d, i) => i * (size + 5) + size / 2 + 0.6 * height - 5
-                    )
-                    // .attr("y", (d, i) => i * (size + 5) + size / 2 + 5) // 100 is where the first dot appears. 25 is the distance between dots
-                    .style("fill", (d) => myColor(d))
-                    .text((d) => d)
-                    .attr("text-anchor", "left")
-                    .style("alignment-baseline", "middle")
-                    .on("mouseover", highlight)
-                    .on("mouseleave", noHighlight);
+        // Add labels beside legend dots
+        svg
+          .selectAll("mylabels")
+          .data(allgroups)
+          .enter()
+          .append("text")
+          .attr("x", 0.9 * width + size * 0.8 + 5)
+          .attr("y", (d, i) => i * (size + 5) + size / 2 + 0.6 * height - 5)
+          // .attr("y", (d, i) => i * (size + 5) + size / 2 + 5) // 100 is where the first dot appears. 25 is the distance between dots
+          .style("fill", (d) => myColor(d))
+          .text((d) => d)
+          .attr("text-anchor", "left")
+          .style("alignment-baseline", "middle")
+          .on("mouseover", highlight)
+          .on("mouseleave", noHighlight);
 
-                //TITEL
+        //TITEL
 
-                const chartTitel = d3
-                    .select("#myBubbleChartD3")
-                    .insert("p", "svg")
-                    .text(
-                        "Impact of Corruption Perceptions Index (CPI) Score and Government Trust on Happiness Score in 2020"
-                    )
-                    .style("font-weight", "bold")
-                    .style("text-align", "center");
-            });
-        </script>
-    </body>
+        const chartTitel = d3
+          .select("#myBubbleChartD3")
+          .insert("p", "svg")
+          .text(
+            "Impact of Corruption Perceptions Index (CPI) Score and Government Trust on Happiness Score in 2020"
+          )
+          .style("font-weight", "bold")
+          .style("text-align", "center");
+      });
+    </script>
+  </body>
 </html>
