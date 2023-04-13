@@ -15,15 +15,8 @@
       opacity: 1;
     }
     .tooltip {
-      /* text-decoration: none; */
       position: relative;
       width: 240px;
-    }
-    .tooltip div {
-    }
-    .tooltip:hover div {
-    }
-    #myBubbleChartD3 {
     }
   </style>
   <head>
@@ -40,7 +33,7 @@
     <script src="./bubbleChart.js"></script>
     <script src="./getDataBubbleChart.js"></script>
     <script src="./bubbleChartD3.js"></script>
-    <!-- <h1>Happiness Score 2015 - 2020</h1> -->
+
     <div id="myBubbleChartD3"></div>
 
     <span style="display: flex">
@@ -55,11 +48,6 @@
       * CPI Score = CPI Score Scaled * 10
     </p>
 
-    <!-- 
-        <div style="width: 800px; height: 400px">
-            <canvas id="myBubbleChart"></canvas>
-        </div> -->
-
     <script>
       d3.csv("world_happiness_report.csv").then((data) => {
         const canvasLineChart = document
@@ -71,14 +59,6 @@
           .getElementById("myBarChart")
           .getContext("2d");
         const barChart = createNewBarChart(canvasBarChart, data);
-
-        // const canvasBubbleChart = document
-        //     .getElementById("myBubbleChart")
-        //     .getContext("2d");
-        // const bubbleChart = createNewBubbleChart(
-        //     canvasBubbleChart,
-        //     data
-        // );
       });
 
       // set the dimensions and margins of the graph
@@ -97,8 +77,8 @@
 
       //Read the data
       d3.csv("world_happiness_report.csv").then(function (data) {
+        //Filter Data for year 2020
         data_filtered = [];
-
         for (i = 0; i < data.length; i++) {
           if (data[i].Year == 2020) {
             data_filtered.push(data[i]);
@@ -309,7 +289,6 @@
           .join("circle")
           .attr("cx", 0.9 * width)
           .attr("cy", (d, i) => 0.6 * height + i * (size + 5))
-          // .attr("cy", (d, i) => 10 + i * (size + 5)) // 100 is where the first dot appears. 25 is the distance between dots
           .attr("r", 7)
           .style("fill", (d) => myColor(d))
           .on("mouseover", highlight)
@@ -323,7 +302,6 @@
           .append("text")
           .attr("x", 0.9 * width + size * 0.8 + 5)
           .attr("y", (d, i) => i * (size + 5) + size / 2 + 0.6 * height - 5)
-          // .attr("y", (d, i) => i * (size + 5) + size / 2 + 5) // 100 is where the first dot appears. 25 is the distance between dots
           .style("fill", (d) => myColor(d))
           .text((d) => d)
           .attr("text-anchor", "left")
@@ -332,7 +310,6 @@
           .on("mouseleave", noHighlight);
 
         //TITEL
-
         const chartTitel = d3
           .select("#myBubbleChartD3")
           .insert("p", "svg")
